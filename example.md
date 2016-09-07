@@ -147,6 +147,3 @@ I feel that it should be easy to switch between embedding a service
 and having it be external. How exactly this should be done remains to
 be seen. But I don't see any reason why it shouldn't work under the
 system I propose.
-
-Regards,
-Dan
