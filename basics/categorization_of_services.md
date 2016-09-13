@@ -5,16 +5,7 @@
 This is the type of the service which doesn't make sense to host on an external
 VM. The intent of these services is to execute some kind of work directly on the
 machine. These services differ from the hybrids in that their work only really
-makes sense to execute locally. Examples from the standard library could
-include:
-
-  1. `Time` 
-  2. `Console` 
-  3. `File` 
-  4. `Exec` 
-
-Of course all of these could technically be served from a different VM, but the
-services are clearly not intended for this.
+makes sense to execute locally. 
 
 ## Services w/Semi-Fixed Output Ports
 
