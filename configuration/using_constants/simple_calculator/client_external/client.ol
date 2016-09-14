@@ -1,4 +1,4 @@
-include "calculator/calculator_external.iol"
+include "calculator/calculator_port.iol"
 include "console.iol"
 
 main

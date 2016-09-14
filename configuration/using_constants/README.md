@@ -1,4 +1,12 @@
-# Example - JPM Configuration via Constants
+# JPM Configuration via Constants
+
+## Changelog
+
+__14/09/16:__ The generated interface files for the output port has been merged
+into a single file. This is done to ensure no source changes are required to
+switch between internal and external use.
+
+## Description
 
 This example shows how JPM can be used to pass constants to Jolie which will be
 used for configuration purposes. Most importantly this propsoal shows what is

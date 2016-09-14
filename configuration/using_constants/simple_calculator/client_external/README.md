@@ -6,9 +6,7 @@ This demo will use an external calculator service.
 
 Since the default defined in the calculator service is to connect to a localhost
 service at the default port, we won't have to add anything to the
-`package.json`. Thus all we had to do were to include
-`calculator/calculator_external.iol` and we could use the output-port we were
-given.
+`package.json`. 
 
 ## Running the Demo
 
@@ -17,14 +15,14 @@ calculator service. This can be done using:
 
 ```bash
 cd ../calculator
-../jpm start
+../../jpm start
 ```
 
 Then to run this demo:
 
 ```bash
 cd ../client_external
-../jpm start
+../../jpm start
 ```
 
 ---

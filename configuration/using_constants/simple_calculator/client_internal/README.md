@@ -21,5 +21,5 @@ snippet from `package.json` is:
 From this directory run:
 
 ```bash
-../jpm start
+../../jpm start
 ```
