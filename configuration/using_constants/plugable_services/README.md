@@ -10,7 +10,7 @@ times sometimes has issues.
 Configuration is currently not shared amongst multiple services, thus we don't
 have one global place of configuration. I propose something along the lines of
 `jpm start <service>` for starting a service we depend on. As propsed
-[here](../simple_calculator/calculator/README.md).
+[here](../simple_calculator/client_external/README.md).
 
 ## Description
 
