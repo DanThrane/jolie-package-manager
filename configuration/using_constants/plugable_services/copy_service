@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ $# < 2 ]]; then
+    echo "Usage: ./copy_service <source> <destination>"
+else
+    mkdir -p "$2/include/$1"
+    cp $1/include/* $2/include/$1
+    cp $1/*.ol $2/
+fi
