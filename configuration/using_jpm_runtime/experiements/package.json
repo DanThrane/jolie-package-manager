@@ -1,0 +1,32 @@
+{
+    "name": "Client",
+    "version": "1.0.0",
+    "dependencies": [
+        { "name": "service_a", "version": "1.0.0" },
+    ],
+    "license": "MIT",
+    "authors": ["Dan Sebastian Thrane <dathr12@student.sdu.dk>"],
+    "main": "client.ol",
+    "ports": {
+        "ServiceA": { 
+            "type": "service_a",
+            "location": "local",
+            "ports": {
+                // Allow overriding ports of a service like this?
+                "ServiceB": {
+                    // 'type' is inherited from service_a's package.json
+                    // This service could be started with jpm start ServiceA/ServiceB
+                    "location": "socket://foo.bar:41000",
+                    "protocol": "http"
+                }
+            }
+        },
+        "AltServiceA": { 
+            // This service could be started with jpm start AltServiceA
+            "type": "service_a",
+            "location": "socket://localhost:41001",
+            "protocol": "sodep"
+            // Note that this service A would use the default service B
+        }
+    }
+}
