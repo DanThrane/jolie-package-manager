@@ -1,0 +1,10 @@
+graph TB
+    client
+    service_a
+    service_b
+    service_c
+
+    client-->service_a
+    client-->service_c
+    service_a-->service_b
+    service_b-->service_c
