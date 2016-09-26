@@ -8,106 +8,104 @@ between both the development of the package and after the service has been
 packaged and used as a dependency.
 
 There are roughly two ways we may go around actually packaging our packages.
-These are flat files and jap files.
+These are [flat files](flat_files.md) and [jap files](jap_files.md). These two
+documents cover some initial problems and potential implementation strategies.
 
-## Jap Files
+# Issues and Proposed Changes
 
-The current syntax for including a service is rather verbose, for example:
+## Repeated Includes
+
+__Problem:__ For the most part duplicate includes are allowed in Jolie, and will
+have no effect. This is the case when an include file only contains types and
+interfaces. However in the case of include files which contains embeddings, this
+won't be the case. Instead the code will crash, since the embedding will already
+have occured once.
+
+__Proposed changes:__ Automatically add an include guard, which ensures that the
+contents of an include file is only included once. This change is technically
+breaking, although it is unlikely to break much code.
+
+## Syntax for Including Packages
+
+__Problem:__ The syntax for including a package should be relatively simple,
+while at the same time not being confusing. Developers are currently used to the
+include path being injected at the start of the string in the following
+way: `include "$SEARCH_PATH/$FILE"`. For packages this however becomes more
+complicated. Take for example the case of
+[flat files](flat_files.md). We would have to inject the search path in several
+places. We might for example like the statement `include "service_a/file.iol"`
+to include a file placed at `jpm_packages/service_a/include/file.iol`, this
+would mean that we inject into the path in several places, and not just at as a
+prefix.
+
+__Proposed changes:__ For this reason I propose a separate syntax for including
+packages. I have included a few options, most of these only differ in syntax. I
+would personally prefer option 3 or 4, or some other syntactically different
+version. 
+
+### Option 1
 
 ```
-include "jar:file:./git.jap!include/embed.iol"
+include "jpm_packages/service_a/include/default_port.iol"
+include "jpm_packages/service_b/include/default_port.iol"
 ```
 
-Instead of:
+List the complete path, we now become dependent on a particular implementation
+of where packages are saved. This syntax is also very verbose.
 
-```
-include "git/embed.iol"
-```
-
-### Issues
-
-  1. Incorrect search path when embedding a Jolie service within a JAP file. The
-     EmbeddedJolieServiceLoader will attempt to load files from the file system,
-     as opposed to within the JAP file.
-  2. Expanding on #1. Removing the output port and linking directly to the JAP
-     resource works, however the includes from within the `.ol` implementation
-     fails to find the interface file within the JAP file. Again it attempts to
-     search the file system, as opposed to the JAP file.
-  3. The include path convention and the class path convention is broken when
-     including from JAP files. This means that the `lib` and `include` folders
-     are completely ignored from within a JAP file. This means that we cannot
-     package directly on top of this.
-  4. Reading file resources from within a JAP file does not work. This could
-     give some problems if a service, for example, decides to pull default
-     configuration from a file. This would fail since it will be unable to find
-     the default file, even though it is located in the JAP file.
-
-Regarding issue #1 and #2 gives similar stack-traces which output what is most
-likely the current directory. It looks like this: 
-
-```
-/home/dan/projects/master_thesis/thoughts/jap_jolie_include/usage/jar:file:./foobar.jap!/foobar.ol
-```
-
-Which of course is nonsense path, but this is probably a good hint as to what is
-wrong.
-
-## Flat Files
-
-We should be able to avoid name-clashes if we put every tarball into their own
-directory. However this proves problematic due to the fact that inlcudes are
-done relative to the current working directory, as opposed to in C++ where
-includes are done relative to the file which has the include.
-
-This becomes a problem since all includes would have to be changed if we extract
-a package into a new folder, which exists in a different place, to where you
-would start the interpreter.
-
-Consider a package, which has the following dependency tree:
-
-![](dependency_tree.png)
-
-This should cause the following directory structure:
-
-  - `include`
-  - `lib`
-  - `client.ol`
-  - `jpm_packages`
-    + `service_a`
-      - `include`
-        + `default_port.iol`
-      - `lib`
-      - `service_a.ol`
-    + `service_b`
-      - `include`
-        + `default_port.iol`
-      - `lib`
-      - `service_b.ol`
-    + `service_c`
-      - `include`
-        + `default_port.iol`
-      - `lib`
-      - `service_c.ol`
-
-The client should then be able to include the services `a` and `b` in the
-following way:
+### Option 2
 
 ```
 include "service_a/default_port.iol"
 include "service_c/default_port.iol"
 ```
 
-# Overall Issues with Include Statements
+Here we inject into the path in two ways. Firstly we add the `jpm_packages`
+implicitly, along with also adding `include` within a package. This can be
+problematic to implement, it may also be hard to understand for users.
 
-  1. Including a file twice may cause problems in some cases, while in others it
-     won't cause problems. This for example occurs if an include file causes
-     embedding of a service
+### Option 3
 
-# Propsed Changes to Include Statements
+```
+include "service_a" "default_port.iol"
+include "service_b" "default_port.iol"
+```
 
-  1. Make includes relative to the source file which contain the include
-     (BREAKING CHANGE)
-  2. Automatically add an include guard, which ensures that the contents of an
-     include file is only included once. (BREAKING CHANGE)
-  3. Change the search algorithm to always follow the convention of the include
-     directory and lib directory (Although this is in a different place)
+Introduce a new syntax of the following format:
+
+```
+include <package_name> <file>
+```
+
+This requires Jolie to have knowledge of the existance of packages. The search
+path is only injected in front of the file. Which is how it works currently.
+
+### Option 4
+
+```
+from "service_a" import "default_port.iol"
+from "service_b" import "default_port.iol"
+```
+
+Similar to option 3, but different syntax. This would also introduce a new
+keyword `from` which would techincally be a breaking change.
+
+## Includes within a Package
+
+__Problem:__ When includes are performed within a package, the default search
+path won't be sufficient. The current search path would be relative to the
+client, this should instead be relative to the package.
+
+__Proposed changes:__ Automatically inject the correct search path for
+includes which come from a package. This means we much track the parsing context
+such that we can detect this case.
+
+## Classpath Additions from Packages
+
+__Problem:__ JAR files included in a packages should be added to the classpath.
+Currently the Jolie interpreter is (by default) passed the "lib" folder relative
+to the current directory. This won't capture the lib folders of the packages
+added by the manager.
+
+__Proposed changes:__ Search through all added packages and add their lib
+folders to the classpath.
