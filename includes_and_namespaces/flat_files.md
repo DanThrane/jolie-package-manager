@@ -1,13 +1,7 @@
 # Flat Files
 
 We should be able to avoid name-clashes if we put every tarball into their own
-directory. However this proves problematic due to the fact that inlcudes are
-done relative to the current working directory, as opposed to in C++ where
-includes are done relative to the file which has the include.
-
-This becomes a problem since all includes would have to be changed if we extract
-a package into a new folder, which exists in a different place, to where you
-would start the interpreter.
+directory. 
 
 Consider a package, which has the following dependency tree:
 
@@ -34,7 +28,3 @@ This should cause the following directory structure:
         + `default_port.iol`
       - `lib`
       - `service_c.ol`
-
-How a client include services `a` and `b` is a bigger question all-together.
-Following are some options on how we can do this:
-
