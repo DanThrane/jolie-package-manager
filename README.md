@@ -9,3 +9,5 @@
     manager should consider when it comes to deployment.
   - [Configuration](configuration/README.md): Describes aspects that the package
     manager should consider when it comes to configuration.
+  - [Package Specification](package_spec/README.md): The specification for the
+    package document (i.e. `package.json`)
