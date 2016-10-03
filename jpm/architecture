@@ -1,0 +1,37 @@
+graph LR
+    jpm[JPM Server]
+    cli[JPM-CLI]
+    web[JPM-Web]
+    commands[Commands]
+    registries[Registries]
+    registry1[Registry A]
+    registry2[Registry B]
+
+    command-init[Command A]
+    command-publish[Command B]
+    command-dependency[Command C]
+    command-package[Command D]
+
+    dependency-add[Sub-command 1]
+    dependency-remove[Sub-command 2]
+
+    cli-->jpm
+    web-->jpm
+    jpm-->commands
+
+    commands-->command-init
+    commands-->command-publish
+    commands-->command-dependency
+    commands-->command-package
+
+    registries-->registry1
+    registries-->registry2
+
+    command-dependency-->dependency-add
+    command-dependency-->dependency-remove
+
+    dependency-add-->command-package
+
+    command-init-->registries
+    command-init-->command-package
+    command-publish-->command-package

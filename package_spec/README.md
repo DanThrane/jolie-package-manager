@@ -17,20 +17,21 @@ properties about the package. These properties are described in the section
 <!-- MarkdownTOC -->
 
 - [Format and Properties](#format-and-properties)
-    - [name](#name)
-    - [version](#version)
-    - [license](#license)
-    - [authors](#authors)
-    - [private](#private)
-    - [dependencies](#dependencies)
-    - [dependency](#dependency)
-        - [name](#name-1)
-        - [version](#version-1)
-        - [registry](#registry)
-    - [registries](#registries)
-    - [registry](#registry-1)
-        - [name](#name-2)
-        - [location](#location)
+  - [name](#name)
+  - [version](#version)
+  - [license](#license)
+  - [authors](#authors)
+  - [private](#private)
+  - [main](#main)
+  - [dependencies](#dependencies)
+  - [dependency](#dependency)
+    - [name](#name-1)
+    - [version](#version-1)
+    - [registry](#registry)
+  - [registries](#registries)
+  - [registry](#registry-1)
+    - [name](#name-2)
+    - [location](#location)
 
 <!-- /MarkdownTOC -->
 
@@ -156,6 +157,22 @@ __Rules:__
 
   - By default this property has the value of `true` to avoid accidential
     publishing of private packages.
+
+### main
+
+__Name:__ `main`
+
+__Optional:__ true
+
+__Type:__ `string`
+
+__Description:__ Describes the main file of a package. This is the file that
+should be invoked when the command `jpm-start-package` is invoked.
+
+__Rules:__
+
+  - The value must point to an `.ol` file.
+  - The value is considered to be a relative file path from the package root.
 
 ### dependencies
 

@@ -14,6 +14,10 @@ interface This::Is::My::Namespace::FooIface {
 }
 ```
 
+TODO Should this syntax even be supported or should it rely entirely on
+namespace regions? For example using a colon is going to make parsing
+complicated for type definitions (e.g. `type A::B::C::D::E:int`).
+
 Or we could create a namespace region:
 
 ```
