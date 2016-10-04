@@ -192,7 +192,7 @@ jolie --service-name <serviceName> --start-package <packageName>
 ```
 
 This command would start the package given by `<packageName>` (for more info see
-the [/package_spec/README.md](package specification)). The service launched will
+the [package specification](/package_spec)). The service launched will
 use configuration given to service which uses that name. In the configuration
 files this will be done by having regions at the root level which configure only
 the service with that name. For example:
@@ -249,9 +249,9 @@ Discussion[7]).
   2. Should all configurable constructs be marked as external before they can be
      configured?
   3. Constants are already configurable with the `-C` command line argument. The
-     idea of having to expliclty mark construct as configurable goes against the
-     functionality provided by `-C`. How should we handle this behavior going
-     forward, if we choose to require each construct to be marked?
+     idea of having to explicitly mark construct as configurable goes against
+     the functionality provided by `-C`. How should we handle this behavior
+     going forward, if we choose to require each construct to be marked?
   4. Should user defined types be allowed in configuration?
   5. Is there any reason for configuring both constants and variables? Should
      configuration variables be changed at run-time?
