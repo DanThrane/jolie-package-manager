@@ -192,7 +192,7 @@ jolie --service-name <serviceName> --start-package <packageName>
 ```
 
 This command would start the package given by `<packageName>` (for more info see
-the [package specification](/package_spec)). The service launched will
+the [package specification](/package_spec#main)). The service launched will
 use configuration given to service which uses that name. In the configuration
 files this will be done by having regions at the root level which configure only
 the service with that name. For example:
