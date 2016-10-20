@@ -1,0 +1,7 @@
+graph TB
+    Client
+    DBA[Database A]
+    DBB[Database B]
+
+    Client-->DBA
+    Client-->DBB

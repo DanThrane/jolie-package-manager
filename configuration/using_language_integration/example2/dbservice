@@ -1,0 +1,11 @@
+graph TB
+    Database
+    DepA
+    DepB
+    DepC
+    DepD
+
+    Database-->DepA
+    Database-->DepB
+    DepA-->DepC
+    DepA-->DepD

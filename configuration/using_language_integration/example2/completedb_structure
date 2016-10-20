@@ -1,0 +1,25 @@
+graph TB
+    Client
+    DBA[Database A]
+    DBB[Database B]
+
+    Client-->DBA
+    Client-->DBB
+
+    DepB
+
+    DepA1
+    DepC1
+    DepD1
+    DBA-->DepA1
+    DBA-->DepB
+    DepA1-->DepC1
+    DepA1-->DepD1
+    
+    DepA2
+    DepC2
+    DepD2
+    DBB-->DepA2
+    DBB-->DepB
+    DepA2-->DepC2
+    DepA2-->DepD2
