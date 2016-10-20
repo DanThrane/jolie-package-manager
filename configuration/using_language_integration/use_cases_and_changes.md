@@ -23,7 +23,7 @@ First we classify services by the following properties:
 ## Refinements
 
 Let's start by discussing a few refinements that were made to the 
-[previous proposal](../), most of these changes are merely refinements, but 
+[previous proposal](./), most of these changes are merely refinements, but 
 there are some changes.
 
 The first refinement is that one package corresponds to exactly one service.

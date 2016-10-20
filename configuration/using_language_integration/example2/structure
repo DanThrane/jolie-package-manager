@@ -1,8 +1,0 @@
-graph TB
-    A
-    B[Weather]
-    C[Events]
-    D[Database]
-    A-->B
-    A-->C
-    A-->D
