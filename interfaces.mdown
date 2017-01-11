@@ -1,0 +1,108 @@
+# Desired operations:
+
+## Modifying Types by Adding Fields [Merging with another type]
+
+__Currently used in:__ Courieres (interface extenders)
+
+__Operation:__ mergePlus(A, B) = type(fields(A) + fields(B))
+
+__Example:__
+
+```jolie
+type A: void {
+    .a: int
+    .b: string
+    .c: bool    
+}
+
+type B: void {
+    .d: int
+    .e: int
+    .f: int
+}
+
+type Result: void {
+    .a: int
+    .b: string
+    .c: bool    
+    .d: int
+    .e: int
+    .f: int
+}
+```
+
+__Implemented in:__ `Type#extend`
+
+__Notes:__ The current implementation doesn't (visibly) handle duplicate keys.
+The RHS of the extension gets priority and has its field added. Not sure
+if this is intentional.
+
+The implementation only inspects the subtypes. The root type is always inherited
+from the LHS.
+
+This is not like a type product.
+
+## Modifying Types by Removing Fields [Reverse operation of above]
+
+__Currently used in:__ Not used. Couriers do however cut the field of another
+type from a value, thus reducing to a value with such a type (Making it an
+effective reference implementation)
+
+__Operation:__ 
+
+C = mergePlus(A, B)
+mergeMinus(C, B) = A
+mergeMinus(C, A) = B
+
+__Implemented in:__ `Type#cutChildrenFromValue`
+
+__Notes:__ This shares the same problems that the reverse operation does.
+
+## Modifying Interfaces by Adding Operations
+
+__Currently used in:__ Ports (multiple interfaces)
+
+__Operation:__ Corresponds to summing all the interfaces.
+
+__Implemented in:__ `Interface#merge`
+
+__Notes:__ The current implementation doesn't handle conflicting operations.
+Currently the last interface listed will be used and overwrite any conflicting
+operation. Most languages would probably report an error in this case. But is
+this how we would want to handle this? I believe some languages would simply
+require you to state which version you are implementing.
+
+Example code:
+
+```jolie
+include "console.iol"
+
+execution { concurrent }
+
+interface IA {
+    RequestResponse:
+        op1(int)(int)
+}
+
+interface IB {
+    RequestResponse:
+        op1(string)(string)
+}
+
+inputPort A {
+    Location: "socket://localhost:41000"
+    Protocol: sodep
+    Interfaces: IA, IB
+}
+
+main
+{
+    [op1(req)(res) {
+        println@Console("Hello, world!")();
+        res = req
+    }]
+}
+```
+
+## Modifying Interfaces by Removing Operations
+
