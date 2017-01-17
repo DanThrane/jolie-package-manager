@@ -46,6 +46,25 @@ group. Additionally this user gets an additional right, which allows super-
 privileged actions to occur on the package. This would for example include
 transfer of super-privileges.
 
+---
+
+__Technical details__
+
+Group name: `pkg-maintainers.<packageName>`
+
+Super privileges are added to the singleton user group (`users.<userName>`).
+They are granted the right `super` on the key 
+`group.pkg-maintainers.<packageName>`.
+
+Privileges for a packages are found in under the key `packages.<packageName>`.
+Where we can grant the following rights: `read` and `write`. As a fallback the
+registry will also check the key `packages.*' for rights. This is how we for
+example can create a completely public registry. This would be done by making
+the defaults rights for every user: `packages.*: [read]`. This would also allow
+for admins that can read and write everything: `packages.*: [read, write]`.
+
+---
+
 ```
 jpm ownership add <user> [--super]
 ```
