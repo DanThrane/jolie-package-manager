@@ -66,7 +66,8 @@ jpm ownership move <team/user>
 
 Transfers complete ownership to another team or user. The existing group
 maintaining this loses all rights (unless they happen to be in the new team).
-This can only be done by super-privileged users.
+This can only be done by super-privileged users. This is not a group specific
+operation, but rather a package mantainer operation.
 
 ## Teams
 

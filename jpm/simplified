@@ -1,0 +1,7 @@
+graph LR
+    cli[JPM-CLI]
+    jpm[JPM]
+    registry[Registry]
+
+    cli-->jpm
+    jpm-->registry

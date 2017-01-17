@@ -1,0 +1,16 @@
+graph TD
+    jpm[JPM]
+    downloader[Downloader]
+    registry[Registries]
+    packages[Package Verifier]
+    semver[SemVer]
+    exec[Execution]
+    jolie[Jolie Interpreter]
+
+    jpm-->registry
+    jpm-->packages
+    jpm-->downloader
+    jpm-->exec
+    downloader-->registry
+    packages-->semver
+    exec-->jolie
