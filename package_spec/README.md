@@ -63,14 +63,14 @@ __Optional:__ false
 __Type:__ `string`
 
 __Description:__ The `name` property uniquely defines a package in a registry.
-Every registry must only contain a single package with a given name. 
+Every registry must only contain a single package with a given name.
 
 __Rules:__
 
   - The name of a package is _not_ case-sensitive
   - The length of a name is less than 255 characters
   - Names are US-ASCII
-  - Names may only contain unreserved URI characters (see section 2.3 of 
+  - Names may only contain unreserved URI characters (see section 2.3 of
     [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt))
 
 If any of these rules are broken the JPM tool should complain when _any_ command
@@ -92,7 +92,7 @@ __Description:__ This property describes the current version of this package.
 
 __Rules:__
 
-  - The version string must be a valid SemVer 2.0.0 string (see 
+  - The version string must be a valid SemVer 2.0.0 string (see
     http://semver.org/spec/v2.0.0.html)
 
 __TODO:__
@@ -111,12 +111,7 @@ __Description:__ Describes the license that this package is under.
 
 __Rules:__
 
-  - Using a valid SPDX identifier might work https://spdx.org/licenses/ TODO
-
-__TODO:__
-
-  - TODO How should a license be expressed
-  - Should the property be mandatory?
+  - Must be a valid identifier. See https://spdx.org/licenses/
 
 ### authors
 
@@ -136,11 +131,6 @@ __Rules:__
 ```
 name ["<" email ">"] ["(" homepage ")"]
 ```
-
-__TODO:__
- 
-  - The grammar needs to be formal
-  - Encoding etc.
 
 ### private
 
@@ -166,12 +156,10 @@ __Optional:__ true
 
 __Type:__ `string`
 
-__Description:__ Describes the main file of a package. This is the file that
-should be invoked when the command `jpm-start-package` is invoked.
+__Description:__ Describes the main file of a package.
 
 __Rules:__
 
-  - The value must point to an `.ol` file.
   - The value is considered to be a relative file path from the package root.
 
 ### dependencies
@@ -291,7 +279,7 @@ __Rules:__
 __TODO:__
 
   - Encoding of name
-  - Should the length limit be dropped? There is no technical reason for the 
+  - Should the length limit be dropped? There is no technical reason for the
     limit
 
 #### location
@@ -312,3 +300,4 @@ __TODO:__
 
   - We probably only want to allow a subset of location strings. For example
     auto bound locations doesn't make a lot of sense in this context.
+

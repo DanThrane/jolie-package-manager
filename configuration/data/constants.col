@@ -1,0 +1,6 @@
+profile "foo" configures "foo" {
+    A = -10,
+    B = "socket://localhost:12340",
+    C = "socket://localhost:11111"
+    // A = "foo"
+}

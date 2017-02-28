@@ -1,7 +1,7 @@
 # Flat Files
 
 We should be able to avoid name-clashes if we put every tarball into their own
-directory. 
+directory.
 
 Consider a package, which has the following dependency tree:
 
@@ -28,3 +28,4 @@ This should cause the following directory structure:
         + `default_port.iol`
       - `lib`
       - `service_c.ol`
+

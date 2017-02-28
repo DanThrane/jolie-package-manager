@@ -1,0 +1,3 @@
+profile "service" configures "service" {
+    INTERNAL_CONSTANT = 1337
+}
