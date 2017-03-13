@@ -14,27 +14,25 @@ properties about the package. These properties are described in the section
 
 ## Table of Contents
 
-<!-- MarkdownTOC -->
+<!-- vim-markdown-toc GFM -->
+* [Format and Properties](#format-and-properties)
+    * [name](#name)
+    * [version](#version)
+    * [license](#license)
+    * [authors](#authors)
+    * [private](#private)
+    * [main](#main)
+    * [dependencies](#dependencies)
+    * [dependency](#dependency)
+        * [name](#name-1)
+        * [version](#version-1)
+        * [registry](#registry)
+    * [registries](#registries)
+    * [registry](#registry-1)
+        * [name](#name-2)
+        * [location](#location)
 
-- [Format and Properties](#format-and-properties)
-  - [name](#name)
-  - [version](#version)
-  - [license](#license)
-  - [authors](#authors)
-  - [private](#private)
-  - [main](#main)
-  - [dependencies](#dependencies)
-  - [dependency](#dependency)
-    - [name](#name-1)
-    - [version](#version-1)
-    - [registry](#registry)
-  - [registries](#registries)
-  - [registry](#registry-1)
-    - [name](#name-2)
-    - [location](#location)
-
-<!-- /MarkdownTOC -->
-
+<!-- vim-markdown-toc -->
 
 ## Format and Properties
 
@@ -73,12 +71,8 @@ __Rules:__
   - Names may only contain unreserved URI characters (see section 2.3 of
     [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt))
 
-If any of these rules are broken the JPM tool should complain when _any_ command
-is invoked. Similarly a registry should reject any such package.
-
-__TODO:__
-
-  - Discuss the rules proposed here
+If any of these rules are broken the JPM tool should complain when _any_
+command is invoked. Similarly a registry should reject any such package.
 
 ### version
 
@@ -94,10 +88,6 @@ __Rules:__
 
   - The version string must be a valid SemVer 2.0.0 string (see
     http://semver.org/spec/v2.0.0.html)
-
-__TODO:__
-
-  - Discuss the rules propsed here
 
 ### license
 
@@ -119,7 +109,7 @@ __Name:__ `authors`
 
 __Optional:__ false
 
-__Type:__ `array<string>`
+__Type:__ `string|array<string>`
 
 __Description:__ Describes the authors of this package
 
@@ -213,13 +203,6 @@ __Rules:__
   - Must be a valid SemVer 2.0.0 string
   - (This property follows the same rules as the package version does)
 
-__TODO:__
-
-  - Should we allow a package to be less strict about which version to use? For
-    example we might allow ranges of versions to be used. For example
-    `">=2.0.0"` could describe that the newest version above `2.0.0` should be
-    used.
-
 #### registry
 
 __Name:__ `registry`
@@ -295,9 +278,4 @@ __Description:__ Describes the location of the registry.
 __Rules:__
 
   - Must be a valid Jolie location string (e.g. "socket://localhost:8080")
-
-__TODO:__
-
-  - We probably only want to allow a subset of location strings. For example
-    auto bound locations doesn't make a lot of sense in this context.
 

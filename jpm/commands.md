@@ -1,326 +1,143 @@
-# JPM Commands
+# Commands
 
-<!--
-Command template:
+This document contains a complete list of commands available in JPM.
 
-__Name:__
+## Table of Contents
 
-__Usage:__
+<!-- vim-markdown-toc GFM -->
+* [help](#help)
+* [init](#init)
+* [install](#install)
+* [search](#search)
+* [start](#start)
+* [publish](#publish)
+* [whoami](#whoami)
+* [register](#register)
+* [login](#login)
+* [logout](#logout)
+* [cache](#cache)
+* [ping](#ping)
 
-__Description:__
+<!-- vim-markdown-toc -->
 
-__Example:__
--->
+## help
 
-```
-type JPM::CommandContext: void {
-    .workingDirectory: File
-}
-```
+Usage: `jpm help [COMMAND]`
 
-## jpm-package
+Displays general help for the JPM tool or a specific `COMMAND`.
 
-__Name:__ `package`
+## init
 
-__CLI-Usage:__ `jpm package`
+Initializes a repository in the current directory.
 
-__Request:__
+Usage: `jpm init`
 
-```
-type JPM::PackageRequest: void {
-    .context: JPM::CommandContext
-}
-```
+This will start a command-line wizard which guides you through the
+initialization process. This command will create a new folder in the current
+directory with the name of the package.
 
-__Response:__
-
-```
-type JPM::PackageResponse: void {
-    .package: JPM::Package
-}
-```
-
-__Description:__ Displays information about the package listed in the current
-working directory.
-
-__Example:__
+Example:
 
 ```
-$ jpm package
-{
-    "name": "client",
-    "version": {
-        "major": 1,
-        "minor": 0,
-        "patch": 0,
-        "label": null
-    },
-    "dependencies": [],
-    "license": "MIT",
-    "authors": [
-        {
-            name: "Author 1",
-            email: null,
-            homepage: null
-        }
-    ]
-}
-```
-
-Note that this is not the same as the contents of `package.json` rather this is
-an actually fully parsed version of it serialized as JSON.
-
-## jpm-version
-
-__Name:__ `version`
-
-__CLI-Usage:__ `jpm version`
-
-__Request:__
-
-```
-type JPM::VersionRequest: void {
-    .context: JPM::CommandContext
-}
-```
-
-__Response:__
-
-```
-type JPM::VersionResponse: void {
-    .productName: string
-    .version: SemVer
-    .releaseDate: ISO8601Date
-}
-```
-
-__Description:__ Outputs the current version of JPM. 
-
-__Example:__
-
-```
-$ jpm version
-JPM
-1.0.0
-2016-09-26
-```
-
-```
-$ jpm version --format json
-{
-    "product_name": "JPM",
-    "version": "1.0.0",
-    "release_date": "2016-09-26"
-}
-```
-
-## jpm-init
-
-__Name:__ `init`
-
-__CLI-Usage:__ `jpm init`
-
-__Request:__
-
-```
-type JPM::InitRequest: void {
-    .context: JPM::CommandContext
-    .name?: string
-    .license?: string
-    .authors[0,*]: JPM::Author
-}
-```
-
-__Response:__
-
-```
-type JPM::InitResponse: void
-```
-
-__Description:__ Displays an interactive initialization wizard. This command
-will fail if this working directory contains a package. Otherwise this will
-result in a newly created package document (see
-[package_spec](/package_spec/README.md)).
-
-__Example:__
-
-```bash
-$ mkdir client
-$ cd client
+$ ls
 $ jpm init
-Name [client]:
->
-License [MIT]:
->
-Authors:
-> Author 1, Author 2
+Package name
+------------
+> foo
 
-Generated 'package.json'
-$ cat package.json
-{
-    "name": "client",
-    "version": "1.0.0",
-    "dependencies": [],
-    "license": "MIT",
-    "authors": ["Author 1", "Author 2"]
-}
-```
+Package description
+-------------------
+> bar
 
-## jpm-install
+Author: [Format: name <email> (homepage)]
+-----------------------------------------
+> Dan Sebastian Thrane <dthrane@gmail.com> (github.com/DanThrane)
 
-__Name:__ `install` 
+Private package? [Y/n]
+----------------------
+> n
 
-__CLI-Usage:__ `jpm install`
-
-__Request:__
-
-```
-type JPM::InstallRequest: void {
-    .context: JPM::CommandContext
-}
-```
-
-__Response:__
-
-```
-type JPM::InstallResponse: void
-```
-
-__Description:__ Reads the package document, retrieves the dependencies,
-contacts the registires to pull the correct packages.
-
-__Example:__
-
-This shows an example of a client which depends on a service called `service_a`
-
-```
 $ ls
-package.json client.ol
-$ jpm install
-Installing dependencies... Done
-$ ls
-package.json client.ol jpm_packages
-$ ls jpm_packages
-service_a
+foo
 ```
 
-## jpm-publish
+## install
 
-__Name:__ `publish`
+Installs the dependencies of this package.
 
-__CLI-Usage:__ `jpm publish [registry]`
+Dependencies are loaded from package.json .... TODO
 
-The registry has a default value of "public"
+## search
 
-__Request:__
+Searches known registries for a package.
 
-```
-type JPM::PublishRequest: void {
-    .context: JPM::CommandContext
-    .registry?: string
-}
-```
+Usage: `jpm search <query>`
 
-__Response:__
+## start
 
-```
-type JPM::PublishResponse: void
-```
+Starts the package placed in the working directory.
 
-__Description:__ Publishes the package found in the current working directory to
-`registry`.
+Usage: `jpm start [OPTIONS] [PROGRAM-ARGUMENTS]`
 
-__Example:__
+Options:
 
-```
-$ cd $CALCULATOR_HOME
-$ jpm publish
-Are you sure you wish to release Calculator at version 1.0.0 to 
-<registry>? [y/N]
-> y
-Uploading Calculator@1.0.0 to <registry>
-... Done
-```
+  - `--deploy <profile> <configurationFile>`: Uses a deployment profile
+  - `--verbose`: Verbose output
+  - `--debug <suspend> <port>`: Uses `joliedebug` as the interpreter
 
-## jpm-add-dependency
+## publish
 
-__Name:__ `add-dependency`
+Publishes this package.
 
-__CLI-Usage:__ `jpm add-dependency [name [version] [registry]]`
+## whoami
 
-The registry will default to "public".
+Outputs the user you're logged in as with a registry.
 
-__Request:__
+Usage: `jpm whoami [--registry <NAME>]`
 
-```
-type JPM::AddDependencyRequest: void {
-    .context: JPM::CommandContext
-    .name: string
-    .version: SemVer
-    .registry?: string
-}
-```
+If no registry is given it will be set to 'public'.
 
-__Response:__
+## register
 
-```
-type JPM::AddDependencyResponse: void
-```
+Create a new user with a registry.
 
-__Description:__ Adds a dependency to the package document. If the name or
-version is missing the command will start interactive mode, which will guide you
-through the process.
+Usage: `jpm register [--registry <NAME>] [<USERNAME> <PASSWORD>]`
 
-__Example:__
+If no registry is given it will be set to 'public'. If no username and password
+is provided a login prompt will be shown.
 
-Interactive mode is shown in the following example:
+## login
 
-```
-$ jpm add-dependency Calculator
-Found package 'Calculator' latest version is 1.0.0
+Login to a given registry.
 
-Version [1.0.0]:
->
+Usage: `jpm login [--registry <NAME>] [<USERNAME> <PASSWORD>]`
 
-Added dependency to package.json
+By default the registry name will be set to 'public'. A login prompt is shown
+if no username or password is provided.
 
-$ cat package.json
-{
-    "name": "client",
-    "version": "1.0.0",
-    "dependencies": [
-        {
-            "name": "Calculator",
-            "version": "1.0.0"
-        }
-    ],
-    "license": "MIT",
-    "authors": ["Author 1", "Author 2"]
-}
-```
+## logout
 
-If everything is listed, the process is slightly shorter:
+Logout from a registry.
 
-```
-$ jpm add-dependency Calculator 1.0.0 public
-Found package 'Calculator' at version 1.0.0 in registry "public"
+Usage: `jpm logout [--registry <NAME>]`
 
-Added dependency to package.json
+If no registry is provided it will be set to 'public'.
 
-$ cat package.json
-{
-    "name": "client",
-    "version": "1.0.0",
-    "dependencies": [
-        {
-            "name": "Calculator",
-            "version": "1.0.0"
-        }
-    ],
-    "license": "MIT",
-    "authors": ["Author 1", "Author 2"]
-}
-```
+## cache
 
-## jpm-start-package
+Command which deals with the cache.
+
+Usage: `jpm cache <SUBCOMMAND>`
+
+Available sub-commands:
+
+clear       Clear the cache
+
+## ping
+
+Ping a registry.
+
+Usage: `jpm ping [--registry <NAME>]`
+
+If no registry is given it will be set to 'public'.
 
