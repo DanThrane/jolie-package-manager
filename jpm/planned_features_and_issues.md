@@ -10,6 +10,9 @@
     * [Simple Implementation Proposal](#simple-implementation-proposal)
 * [Cross-Registry Dependencies](#cross-registry-dependencies)
 * [Interface Dependencies](#interface-dependencies)
+* [Multiple Versions of Same Package](#multiple-versions-of-same-package)
+* [Sharing of Embedded Instances](#sharing-of-embedded-instances)
+* [Static Embedding Across Multiple Levels](#static-embedding-across-multiple-levels)
 * [Aggregations](#aggregations)
 
 <!-- vim-markdown-toc -->
@@ -54,7 +57,7 @@ Allow more flexibility in who has rights to publish updates.
 Possible life-time events:
 
   - Pre/Post-publish
-  - Pre/Post-run
+  - Pre/Post-start
   - Pre/Post-install
   - Pre/Post-upgrade
 
@@ -71,8 +74,8 @@ Add a new `events` section which can run scripts, for example:
 ```json
 {
     "events": {
-        "prerun": "./build",
-        "prepublish": "./runchecks"
+        "pre-start": "./build",
+        "pre-publish": "./runchecks"
     }
 }
 ```
@@ -104,7 +107,26 @@ depend on another package.
 
 Certain dependencies are only needed to interface with it
 
+## Multiple Versions of Same Package
+
+Should we allow this? How should we handle it if we allow it?
+
+I'm leaning towards not allowing this.
+
+## Sharing of Embedded Instances
+
+Should it be possible to share an embedded instance? How should we allow this?
+
+## Static Embedding Across Multiple Levels
+
+We need some way of fixing this. We should be able to refer to internal conf
+units. Obvious example of this would be from the article.
+
 ## Aggregations
 
-???
+Inconsistencies in language (currently). We don't really check a whole lot on
+the interface, which makes several of the obivious feature here redundant.
+
+At that point are we really left with anything other than simply adding the
+operations at deployment time to `port.aggregatedOperations`?
 
