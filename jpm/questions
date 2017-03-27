@@ -1,0 +1,18 @@
+# Questions
+
+  - Micro vs. nano
+  - Plan for integrity check:
+    + Have registry save checksum. Endpoint for getting checksum
+    + Calculate checksum of package before installing
+    + Possibly calculate checksum before starting
+  - Yarn appears to be doing the following:
+    + Save checksum of tarballs in lockfile
+    + SHA1 checksum of lockfile
+    + Checksum before installing
+    + I'm sceptical of how much this actually helps. Assumes that project
+      files can be trusted. Having it get from the registry each time will make
+      it harder to just overwrite everything.
+  - Did hooks
+  - Did iface deps
+  - Did lockfiles
+

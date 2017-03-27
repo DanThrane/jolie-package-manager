@@ -1,0 +1,92 @@
+# Interface Problems in Jolie
+
+Aggregations and services cause a significant problem for Jolie. With this
+interface parametricity we have problems in stating what a particular interface
+a port has.
+
+In this document I want to explore possible solution scenarios. Let's first
+start with a few of the problems that we want to solve.
+
+---
+
+**Problem 1:**
+
+When we speak to a circuit breaker, what interface should we put on its output
+port?
+
+---
+
+**Problem 2:**
+
+Currently we need a lot of code generation. Can the solution proposal remove
+the need for this?
+
+---
+
+**Problem 3:**
+
+The solution we end up with, how will it be compatible with existing code?
+
+---
+
+## Solution Proposals
+
+Can we speak directly to a package?
+
+```
+outputPort Target {
+    Location: "socket://cb.target"
+    Protocol: sodep
+    Interfaces: package("cb-target")
+}
+```
+
+Think of `package` as a function, which returns all the interfaces of a given
+profile.
+
+---
+
+**Question:** How should we deal with packages with no configuration?
+
+This setup really only works well if we have a deployment profile lying around.
+What if we don't care about any particular deployment. What about cases where
+deployment is irrelevant for the interface, but still non-optional? In that
+case we would need to ignore such problems when calculating the interface.
+
+Maybe we add two different 'functions'? We could have `deployment` and
+`package`?
+
+---
+
+**Question:** How should we determine the interface of a package?
+
+Determining the complete interface of a package should be doable. We know the
+entry-point, and from that we can gather which input ports are available
+(TODO We need to communicate this information from JPM to Jolie). We then pick
+every non-local input port and expose those operations.
+
+Will this catch too many things? Should we try and limit the interfaces?
+We could add access modifiers to shield input ports from being "public".
+
+```jolie
+private inputPort FooBar {
+    // ...
+}
+```
+
+---
+
+For this approach we could implement it in the following manner:
+
+__Using command-line flags for package information sucks.__
+
+  - Add `package(String)` construct to `Interfaces:` section
+  - Based on this, create a list of public input ports
+  - Create a combined (surface) of these input ports
+  - Allow this to be used by other programs
+  - Since we will need to do all of `OOITBuilder`, we will need to be able to
+    create an interpreter of the actual deployment, but without running any
+    code. This should probably be discussed before we try it.
+    + Probably something along the lines of adding an "inspect" flag to
+      arguments. We don't need to able to set it from the actual CLI.
+
