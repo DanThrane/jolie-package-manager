@@ -10,8 +10,6 @@
     * [Simple Implementation Proposal](#simple-implementation-proposal)
 * [Cross-Registry Dependencies](#cross-registry-dependencies)
 * [Interface Dependencies](#interface-dependencies)
-* [Sharing of Embedded Instances](#sharing-of-embedded-instances)
-* [Static Embedding Across Multiple Levels](#static-embedding-across-multiple-levels)
 * [Aggregations](#aggregations)
 
 <!-- vim-markdown-toc -->
@@ -38,6 +36,13 @@ Related work:
   - http://yarnpkg.com
   - http://crates.io/
 
+---
+
+Let the upgrade script adopt the old behavior, and find the newest, and update
+the lockfile. This should be fairly easy. This is done.
+
+Perhaps also add an interactive mode?
+
 ## Integrity Checks
 
 Introduce integrity checks for packages.
@@ -46,6 +51,12 @@ Possible use-cases:
 
   - Check for accidental/malicious corruption of dependency
   - Check for manual changes to source code
+
+---
+
+Add an endpoint for the registry which answers back with a checksum. Cache
+this checksum locally for comparisons. Also compute new checksum, if any of
+them don't match complain loduly.
 
 ## Registry Teams
 
@@ -100,6 +111,13 @@ Whitelist/blacklist of cross-registry collaboration?
 Alternatively we could do registry mirroring. __[Let's wait and see, go with
 other approach for now]__
 
+---
+
+Implementing this is very easy actually. In the configuration we just need to
+add known locations of registries. We then just check every dependency to see
+if we can reach it. We don't have to care about reaching these dependencies,
+we simply delegate this to the frontend.
+
 ## Interface Dependencies
 
 The dependencies we need to download will change drastically depend on how we
@@ -107,25 +125,11 @@ depend on another package.
 
 Certain dependencies are only needed to interface with it
 
-## Sharing of Embedded Instances
+---
 
-Should it be possible to share an embedded instance? How should we allow this?
-
-__Probably not__
-
-## Static Embedding Across Multiple Levels
-
-We need some way of fixing this. We should be able to refer to internal conf
-units. Obvious example of this would be from the article.
-
-__This is a syntax problem, evaluate different options and implement it.__
+Do we need to deal with libraries? We probably don't want to include these
+as well.
 
 ## Aggregations
 
-Inconsistencies in language (currently). We don't really check a whole lot on
-the interface, which makes several of the obivious feature here redundant.
-
-At that point are we really left with anything other than simply adding the
-operations at deployment time to `port.aggregatedOperations`?
-
-__Wait for a bit.__
+Done. Hopefully

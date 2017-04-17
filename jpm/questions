@@ -16,3 +16,8 @@
   - Did iface deps
   - Did lockfiles
 
+
+What about parametric services that work with parametric interfaces. I think
+we might need to make references to these in a specific way. I'm on the side
+of proposing new syntax that looks a bit like a function, and goes in the
+interfaces attribute in the output port.
