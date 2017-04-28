@@ -1,0 +1,12 @@
+{
+    "name": "addition",
+    "description": "Addition implementation",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>",
+    "main": "main.ol",
+    "dependencies": [
+        { "name": "add-stub", "version": "1.0.0" }
+    ]
+}
+

@@ -1,0 +1,8 @@
+{
+    "name": "numbers",
+    "description": "Shared types for services dealing with numbers",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>"
+}
+

@@ -1,0 +1,11 @@
+include "default.col"
+
+profile "production" configures "multiplication" extends "default" {
+    debug = false,
+
+    inputPort Multiplication {
+        Location: "socket://localhost:42001"
+        Protocol: sodep
+    }
+}
+

@@ -1,0 +1,12 @@
+{
+    "name": "multiplication",
+    "description": "Multiplication implementation",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>",
+    "main": "main.ol",
+    "dependencies": [
+        { "name": "mult-stub", "version": "1.0.0" }
+    ]
+}
+

@@ -1,0 +1,15 @@
+profile "default" configures "multiplication" {
+    // Profiles don't have to provide all values
+    maxInput = 100,
+    minInput = 0
+}
+
+profile "development" configures "multiplication" extends "default" {
+    // maxInput = 100, minInput = 0 from default profile
+    debug = true,
+
+    inputPort Multiplication {
+        Location: "local"
+        Protocol: sodep
+    }
+}

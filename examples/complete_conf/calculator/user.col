@@ -1,0 +1,22 @@
+profile "development" configures "calculator" {
+    inputPort Calculator {
+        Protocol: "socket://localhost:42100"
+        Protocol: sodep
+    },
+
+    outputPort Addition embeds "development"
+}
+
+profile "addition-for-dev" configures "addition" extends "development" {
+    // Addition extends the "development" profile for "Addition"
+    // This file is located in addition/conf/default.col
+    allowOddInput = false
+}
+
+profile "production" configures "calculator" {
+    outputPort Addition {
+        Location: "socket://add.example.com:42000"
+        Protocol: sodep
+    }
+}
+

@@ -1,0 +1,16 @@
+profile "development" configures "addition" {
+    debug = true,
+
+    inputPort Addition {
+        Location: "local"
+        Protocol: sodep
+    }
+}
+
+profile "production" configures "addition" {
+    debug = false,
+    inputPort Addition {
+        Location: "socket://localhost:42000"
+        Protocol: sodep
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "proxy",
+    "description": "A simple proxy",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>",
+    "main": "main.ol",
+    "dependencies": []
+}
+

@@ -1,0 +1,11 @@
+{
+    "name": "mult-stub",
+    "description": "Multiplication stub",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>",
+    "dependencies": [
+        { "name": "numbers", "version": "1.0.0" }
+    ]
+}
+

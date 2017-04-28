@@ -1,0 +1,14 @@
+{
+    "name": "calculator",
+    "description": "A calculator which can perform actions on a sequence of numbers",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": "Dan Sebastian Thrane <dthrane@gmail.com>",
+    "main": "main.ol",
+    "dependencies": [
+        { "name": "numbers", "version": "1.0.0" },
+        { "name": "mult-stub", "version": "1.0.0" },
+        { "name": "addition", "version": "1.0.0" }
+    ]
+}
+
